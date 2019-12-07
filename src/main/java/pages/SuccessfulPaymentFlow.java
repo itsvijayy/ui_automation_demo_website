@@ -27,6 +27,23 @@ public class SuccessfulPaymentFlow {
     WebElement enterName;
     @FindBy(xpath = "(//input[contains(@type, 'email')])[1]")
     WebElement enterEmail;
+    @FindBy(xpath = "(//input[contains(@type, 'text')])[2]")
+    WebElement enterPhoneNo;
+    @FindBy(xpath = "(//input[contains(@type, 'text')])[3]")
+    WebElement enterCity;
+    @FindBy(xpath = "(//td[contains(@class, 'input')])[11]")
+    WebElement assertAddress;
+    @FindBy(xpath = "(//input[contains(@type, 'text')])[4]")
+    WebElement enterPostalCode;
+    @FindBy(xpath = "(//div[contains(@class, 'cart-checkout')])[1]")
+    WebElement buttonCheckout;
+    @FindBy(xpath = "//iframe[@id='snap-midtrans']")
+    WebElement iFramePaymentOption;
+    @FindBy(xpath = "//span[contains(@class, 'text-amount-title')]")
+    WebElement assertAmountText;
+
+
+
 
     public void assert_ShoppingCartText() {
         Assert.assertEquals(assertShoppingCartText.getText(), "Shopping Cart  ");
@@ -50,10 +67,44 @@ public class SuccessfulPaymentFlow {
         log.info("Entered EmailId: test@yopmail.com");
     }
 
+    public void enter_PhoneNo() {
+        enterPhoneNo.clear();
+        enterPhoneNo.sendKeys("9986920809");
+        log.info("Entered Phone No: 9986920809");
+    }
+
+    public void enter_City() {
+        enterCity.clear();
+        enterCity.sendKeys("Bengaluru");
+        log.info("Entered City : Bengaluru");
+    }
+
+    public void assert_Address() throws Exception {
+        Assert.assertEquals(assertAddress.getText(), "MidPlaza 2, 4th Floor Jl.Jend.Sudirman Kav.10-11");
+        log.info("Address text verified");
+    }
+
+    public void enter_PostalCode() {
+        enterPostalCode.clear();
+        enterPostalCode.sendKeys("560068");
+        log.info("Entered Postal Code : 560068");
+    }
+
+    public void clickCheckoutButton() throws Exception {
+        buttonCheckout.click();
+        Thread.sleep(3000);
+    }
+
+    public void paymentPage() {
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(iFramePaymentOption);
+
+        Assert.assertEquals(assertAmountText.getText(), "amount");
 
 
-
-
+        driver.switchTo().parentFrame();
+        driver.switchTo().defaultContent();
+    }
 
 
 

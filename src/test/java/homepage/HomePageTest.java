@@ -1,4 +1,4 @@
-package HomePageTests;
+package homepage;
 
 import base.BaseTests;
 import org.testng.annotations.*;
