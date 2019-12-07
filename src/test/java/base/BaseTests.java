@@ -10,12 +10,15 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.HomePage;
-import java.io.File;
+
+import java.io.*;
+import java.util.Properties;
 
 public class BaseTests {
 
     public RemoteWebDriver driver;
     HomePage homePage;
+
 
     @BeforeClass
     public void setUp(){
@@ -52,6 +55,8 @@ public class BaseTests {
         ChromeOptions chromeOptions = new ChromeOptions();
         return chromeOptions;
     }
+
+
 
 
 

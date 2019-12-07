@@ -1,7 +1,6 @@
-package SuccessfulPaymentTests;
+package successfulpayment;
 
 import base.BaseTests;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import pages.HomePage;
@@ -25,7 +24,12 @@ public class SuccessfulPaymentTests extends BaseTests {
         successfulPaymentFlow.assert_CustomerDetailsText();
         successfulPaymentFlow.enter_NameText();
         successfulPaymentFlow.enter_EmailId();
-
+        successfulPaymentFlow.enter_PhoneNo();
+        successfulPaymentFlow.enter_City();
+        successfulPaymentFlow.assert_Address();
+        successfulPaymentFlow.enter_PostalCode();
+        successfulPaymentFlow.clickCheckoutButton();
+        successfulPaymentFlow.paymentPage();
 
     }
 
