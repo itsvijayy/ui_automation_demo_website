@@ -30,6 +30,8 @@ public class SuccessfulPaymentTests extends BaseTests {
         successfulPaymentFlow.enter_PostalCode();
         successfulPaymentFlow.clickCheckoutButton();
         successfulPaymentFlow.paymentPage();
+        successfulPaymentFlow.enterCreditCardDetails("4811111111111114");
+        successfulPaymentFlow.enterOTP();
 
     }
 

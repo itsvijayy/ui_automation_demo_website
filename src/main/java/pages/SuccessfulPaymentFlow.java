@@ -1,5 +1,6 @@
 package pages;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -41,7 +42,38 @@ public class SuccessfulPaymentFlow {
     WebElement iFramePaymentOption;
     @FindBy(xpath = "//span[contains(@class, 'text-amount-title')]")
     WebElement assertAmountText;
-
+    @FindBy(xpath = "(//a[contains(@class, 'text-actionable')]/span)[1]")
+    WebElement assertOrderDetails;
+    @FindBy(xpath = "(//a[contains(@class, 'text-actionable')]/span)[2]")
+    WebElement assertShippingDetails;
+    @FindBy(xpath = "(//span[contains(@class, 'item-name')])[1]")
+    WebElement assertMidtransPillowText;
+    @FindBy(xpath = "(//td[contains(@class, 'table-amount text-body')])[1]")
+    WebElement assertAmountDetailsText;
+    @FindBy(xpath = "(//a[contains(@class, 'button-main-content')])[1]")
+    WebElement clickContinueButton;
+    @FindBy(xpath = "(//div[contains(@class, 'list-title text-actionable-bold')])[1]")
+    WebElement clickCreditCard;
+    @FindBy(xpath = "(//h1[contains(@class, 'logo-store')])[1]")
+    WebElement assertSampleStore;
+    @FindBy(xpath = "(//span[contains(@class, 'text-amount-amount')])[1]")
+    WebElement assertFinalAmount;
+    @FindBy(xpath = "//input[contains(@name, 'cardnumber')]")
+    WebElement enterCardNumber;
+    @FindBy(xpath = "(//input[contains(@type, 'tel')])[2]")
+    WebElement enterExpiryDate;
+    @FindBy(xpath = "(//input[contains(@type, 'tel')])[3]")
+    WebElement enterCVV;
+    @FindBy(xpath = "//div[contains(@class, 'button-main show')]")
+    WebElement clickPayNowButton;
+    @FindBy(xpath = "//div[contains(@class, 'col-xs-7')]/input[contains(@id, 'PaRes')]")
+    WebElement enterPassword;
+    @FindBy(xpath = "//button[contains(@type, 'submit')]")
+    WebElement clickOKButton;
+    @FindBy(xpath = "(//div[contains(@class, 'text-sucess text-bold')])[1]")
+    WebElement assertTransactionSuccessfulText;
+    @FindBy(xpath = "//span[contains(@class, 'sprite modal-close-dark')]")
+    WebElement clickImportantInfoPopUp;
 
 
 
@@ -69,8 +101,8 @@ public class SuccessfulPaymentFlow {
 
     public void enter_PhoneNo() {
         enterPhoneNo.clear();
-        enterPhoneNo.sendKeys("9986920809");
-        log.info("Entered Phone No: 9986920809");
+        enterPhoneNo.sendKeys("9876543210");
+        log.info("Entered Phone No: 9876543210");
     }
 
     public void enter_City() {
@@ -92,22 +124,71 @@ public class SuccessfulPaymentFlow {
 
     public void clickCheckoutButton() throws Exception {
         buttonCheckout.click();
-        Thread.sleep(3000);
+        Thread.sleep(2000);
     }
 
-    public void paymentPage() {
+    public void paymentPage() throws Exception {
         driver.switchTo().defaultContent();
         driver.switchTo().frame(iFramePaymentOption);
 
         Assert.assertEquals(assertAmountText.getText(), "amount");
+        log.info("Amount text verified");
+        Assert.assertEquals(assertOrderDetails.getText(), "order details");
+        log.info("Order Details text verified");
+        Assert.assertEquals(assertMidtransPillowText.getText(), "Midtrans Pillow");
+        log.info("Midtrans Pillow text verified");
+        Assert.assertEquals(assertAmountDetailsText.getText(),"20,000");
+        log.info("Amount: 20000");
 
+        assertShippingDetails.click();
+        Assert.assertEquals(assertShippingDetails.getText(), "shipping details");
+        log.info("Shipping Details text verified");
+
+        Assert.assertEquals(clickContinueButton.getText(), "CONTINUE");
+        log.info("Continue button text verified");
+        clickContinueButton.click();
 
         driver.switchTo().parentFrame();
         driver.switchTo().defaultContent();
     }
 
+    public void enterCreditCardDetails(String CreditCardNumber) throws Exception {
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(iFramePaymentOption);
 
+        Assert.assertEquals(assertSampleStore.getText(), "Sample Store");
+        log.info("Sample Store text verified");
+        clickCreditCard.click();
 
+        Assert.assertEquals(assertFinalAmount.getText(), "19,000");
+        log.info("Final Amount text verified");
+
+        enterCardNumber.sendKeys(CreditCardNumber);
+        Thread.sleep(1000);
+        enterExpiryDate.sendKeys("02/20");
+        enterCVV.sendKeys("123");
+        clickImportantInfoPopUp.click();
+        clickPayNowButton.click();
+        Thread.sleep(8000);
+
+        driver.switchTo().parentFrame();
+        driver.switchTo().defaultContent();
+    }
+
+    public void enterOTP() throws Exception {
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(iFramePaymentOption);
+//        enterPassword.click();
+        enterPassword.sendKeys("112233");
+        Thread.sleep(3000);
+        clickOKButton.click();
+        Thread.sleep(3000);
+        Assert.assertEquals(assertTransactionSuccessfulText.getText(), "19,000");
+        log.info("Transaction Successful text verified");
+
+        driver.switchTo().parentFrame();
+        driver.switchTo().defaultContent();
+    }
 
 
 }
