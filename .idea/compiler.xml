@@ -9,8 +9,5 @@
         <module name="ui_automation_demo_website" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="ui_automation_demo_website" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
